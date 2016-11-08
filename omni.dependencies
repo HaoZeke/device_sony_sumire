@@ -1,0 +1,8 @@
+[
+  {
+    "remote":       "github",
+    "repository":   "HaoZeke/device_sony_kitakami",
+    "target_path":  "device/sony/kitakami",
+    "revision":     "OmniRom-7.0"
+  }
+]
