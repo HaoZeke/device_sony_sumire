@@ -12,7 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TARGET_KERNEL_CONFIG := aosp_kitakami_sumire_defconfig
+TARGET_KERNEL_SOURCE := kernel/sony/msm
+
+ifeq ($(strip $(TARGET_PRODUCT)), aosp_e6653)
+TARGET_KERNEL_CONFIG := zach_sumire_defconfig
+else
+TARGET_KERNEL_CONFIG := zach_sumire_dsds_defconfig
+endif
+
+#TARGET_KERNEL_CONFIG := zach_sumire_defconfig
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, device/sony/sumire/device.mk)
@@ -24,3 +32,43 @@ PRODUCT_DEVICE := sumire
 PRODUCT_MODEL := Xperia Z5 (AOSP)
 PRODUCT_BRAND := Sony
 PRODUCT_MANUFACTURER := Sony
+
+
+# Additional apps
+PRODUCT_PACKAGES += \
+    masquerade 
+
+# Google Exclusions
+GAPPS_EXCLUDED_PACKAGES := \
+	Hangouts \
+	YouTube \
+	Photos  
+
+# AICP packages
+#PRODUCT_PACKAGES += \
+AicpExtras 
+
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.adb.secure=0 \
+    ro.secure=0 \
+    ro.debuggable=1
+
+# From Cardinal-AOSP
+
+
+# by default, do not update the recovery with system updates
+PRODUCT_PROPERTY_OVERRIDES += persist.sys.recovery_update=false
+
+# DU Utils Library
+#PRODUCT_BOOT_JARS += \
+    org.dirtyunicorns.utils
+#PRODUCT_PACKAGES += \
+org.dirtyunicorns.utils
+
+
+# SD Clang
+#SDCLANG := true
+
+#SDCLANG_PATH := prebuilts/clang/linux-x86/host/sdclang-3.8/bin
+
+#SDCLANG_LTO_DEFS := device/qcom/common/sdllvm-lto-defs.mk
