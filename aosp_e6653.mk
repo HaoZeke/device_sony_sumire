@@ -36,13 +36,21 @@ PRODUCT_MANUFACTURER := Sony
 
 # Additional apps
 PRODUCT_PACKAGES += \
-    masquerade 
+    masquerade \
+    VanillaMusic \
+    OmniGears
+
+# Google Inclusions
+GAPPS_INCLUDED_PACKAGES += \
+	Keep \
+	NewsWidget
 
 # Google Exclusions
-GAPPS_EXCLUDED_PACKAGES := \
+GAPPS_EXCLUDED_PACKAGES += \
 	Hangouts \
 	YouTube \
-	Photos  
+	Photos  \
+	Music
 
 # AICP packages
 #PRODUCT_PACKAGES += \
@@ -53,11 +61,25 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.secure=0 \
     ro.debuggable=1
 
+# TWRP Recovery
+DEVICE_RESOLUTION := 1440x814
+TW_THEME := portrait_hdpi
+TW_IGNORE_ABS_MT_TRACKING_ID := true
+
+# F2FS Support
+PRODUCT_PACKAGES += \
+    mkfs.f2fs \
+    fsck.f2fs \
+    fibmap.f2fs
+
+# QCOM Flag
+QCOM_HARDWARE := true
+
 # From Cardinal-AOSP
 
 
 # by default, do not update the recovery with system updates
-PRODUCT_PROPERTY_OVERRIDES += persist.sys.recovery_update=false
+#PRODUCT_PROPERTY_OVERRIDES += persist.sys.recovery_update=false
 
 # DU Utils Library
 #PRODUCT_BOOT_JARS += \
