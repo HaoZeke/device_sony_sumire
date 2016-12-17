@@ -15,17 +15,21 @@
 TARGET_KERNEL_SOURCE := kernel/sony/msm
 
 ifeq ($(strip $(TARGET_PRODUCT)), aosp_e6653)
-TARGET_KERNEL_CONFIG := zach_sumire_defconfig
+TARGET_KERNEL_CONFIG := pixN_sumire_defconfig
 else
-TARGET_KERNEL_CONFIG := zach_sumire_dsds_defconfig
+TARGET_KERNEL_CONFIG := pixN_sumire_dsds_defconfig
 endif
 
-#TARGET_KERNEL_CONFIG := zach_sumire_defconfig
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, device/sony/sumire/device.mk)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+$(call inherit-product, vendor/google/products/gms.mk)
+$(call inherit-product, vendor/addons/config.mk)
+
+# Include custom telephony configuration
+include vendor/flash/configs/custom_phone.mk
 
 PRODUCT_NAME := aosp_e6653
 PRODUCT_DEVICE := sumire
@@ -37,20 +41,33 @@ PRODUCT_MANUFACTURER := Sony
 # Additional apps
 PRODUCT_PACKAGES += \
     masquerade \
+    AOSPLinks \
     VanillaMusic \
-    OmniGears
+    KernelAdiutor \
+    OmniGears \
+    Busybox
+
+
+
+# DU Utils Library
+PRODUCT_BOOT_JARS += \
+    org.dirtyunicorns.utils
+
+# DU Utils Library
+PRODUCT_PACKAGES += \
+org.dirtyunicorns.utils
 
 # Google Inclusions
 GAPPS_INCLUDED_PACKAGES += \
-	Keep \
-	NewsWidget
+    Keep \
+    NewsWidget
 
 # Google Exclusions
 GAPPS_EXCLUDED_PACKAGES += \
-	Hangouts \
-	YouTube \
-	Photos  \
-	Music
+    Hangouts \
+    YouTube \
+    Photos  \
+    Music
 
 # AICP packages
 #PRODUCT_PACKAGES += \
@@ -94,3 +111,7 @@ org.dirtyunicorns.utils
 #SDCLANG_PATH := prebuilts/clang/linux-x86/host/sdclang-3.8/bin
 
 #SDCLANG_LTO_DEFS := device/qcom/common/sdllvm-lto-defs.mk
+
+# DEXPREOPT
+WITH_DEXPREOPT := true
+
