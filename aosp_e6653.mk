@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+KERNEL_TOOLCHAIN := /run/media/haozeke/Storage/AndBuild/Tools/Toolchains/Uber/aarch64-linux-android-6.0-kernel/bin/
+KERNEL_TOOLCHAIN_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_SOURCE := kernel/sony/msm
 
 ifeq ($(strip $(TARGET_PRODUCT)), aosp_e6653)
@@ -19,7 +21,6 @@ TARGET_KERNEL_CONFIG := pixN_sumire_defconfig
 else
 TARGET_KERNEL_CONFIG := pixN_sumire_dsds_defconfig
 endif
-
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, device/sony/sumire/device.mk)
@@ -29,7 +30,7 @@ $(call inherit-product, vendor/google/products/gms.mk)
 $(call inherit-product, vendor/addons/config.mk)
 
 # Include custom telephony configuration
-include vendor/flash/configs/custom_phone.mk
+include vendor/pixN/configs/custom_phone.mk
 
 PRODUCT_NAME := aosp_e6653
 PRODUCT_DEVICE := sumire
@@ -45,9 +46,7 @@ PRODUCT_PACKAGES += \
     VanillaMusic \
     KernelAdiutor \
     OmniGears \
-    Busybox
-
-
+    Busybox 
 
 # DU Utils Library
 PRODUCT_BOOT_JARS += \
